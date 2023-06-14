@@ -1,16 +1,57 @@
+import "./App.css";
 import { connect } from "react-redux";
-import "./App.css"
-import Counter from "./hoc/index";
+import {increment , decrement} from "./redux/counter/action"
+
+import { useState } from "react";
+
 
 function App(props) {
-	return(
-    <>
-      <div>
-        <h2>Count: {props.count.count}</h2>
-        <button onClick={()=>props.increment()}>Increment</button><br/><br/>
-        <button onClick={()=>props.decrement()}>Deccrement </button>
-      </div>
-    </>
-  )
+
+	const [value, setValue] = useState();
+
+
+	const handleChange = (e) => {
+		
+
+		setValue(e.target.value);
+	};
+	console.log(value);
+	return (
+		<>
+			<div>
+				<h1>Counter: {props.counter}</h1>
+				<br />
+
+				<input type="number" onChange={handleChange} />
+				<br />
+				<br />
+				<button onClick={() => props.increment(Number(value))}>
+					Increment
+				</button>
+				<button onClick={() => props.decrement(Number(value))}>
+					Decrement
+				</button>
+
+				<br />
+				<br />
+				{/* <button onClick={() => props.increment()}>Increment</button>
+				<button onClick={() => props.decrement()}>Decrement</button> */}
+			</div>
+		</>
+	);
 }
-export default Counter(App);
+
+const mapStateToProps = (state) => {
+	return {
+		counter: state.counter,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		increment: (value) => dispatch(increment(value)),
+		decrement: (value) => dispatch(decrement(value)),
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
