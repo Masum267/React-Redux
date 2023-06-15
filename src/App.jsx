@@ -21,6 +21,7 @@ function App(props) {
 			<div>
 				<h1>Counter: {props.counter}</h1>
 				<br />
+				<br />
 
 				<input type="number" onChange={handleChange} />
 				<br />
